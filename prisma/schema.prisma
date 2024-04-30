@@ -43,30 +43,31 @@ enum Role {
   admin
 }
 
+
 enum Category {
-  geografia
-  anatomia
-  matematicas
-  arte
-  literatura
-  fisica
-  biologia
-  historia
-  quimica
-  musica
-  economia
-  filosofia
-  derecho
-  idiomas
-  informatica
-  geologia
-  psicologia
-  contabilidad
-  astronomia
-  hosteleria
-  sociologia
-  sexologia
-  ingenieria
-  arquitectura
-  paleontologia
+  geography
+  anatomy
+  mathematics
+  art
+  literature
+  physics
+  biology
+  history
+  chemistry
+  music
+  economics
+  philosophy
+  law
+  languages
+  computerScience
+  geology
+  psychology
+  accounting
+  astronomy
+  hospitality
+  sociology
+  sexology
+  engineering
+  architecture
+  paleontology
 }

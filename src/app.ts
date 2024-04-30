@@ -1,3 +1,32 @@
-import express from 'express';
+import { type PrismaClient } from '@prisma/client';
+import cors from 'cors';
+import express, { type Express } from 'express';
+import morgan from 'morgan';
+import { UserRepository } from './repositories/users.repository/user.respository.js';
+import { UserController } from './controllers/users.controller/users.controller.js';
+import { UserRouter } from './routers/users.routers/user.router.js';
+import createDebug from 'debug';
 
-export const createApp = () => express();
+const debug = createDebug('FP*:app');
+
+export const createApp = () => {
+  debug('creating app');
+  return express();
+};
+
+export const startApp = (app: Express, prisma: PrismaClient) => {
+  debug('starting app');
+  app.use(express.json());
+  app.use(morgan('dev'));
+  app.use(cors());
+
+  app.get('/', (req, res, next) => {
+    console.log('App.get');
+    res.json({ messaje: 'App get' });
+  });
+
+  const usersRepo = new UserRepository(prisma);
+  const usersController = new UserController(usersRepo);
+  const usersRouter = new UserRouter(usersController);
+  app.use('/users', usersRouter.router);
+};
