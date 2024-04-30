@@ -8,14 +8,14 @@ describe('Given the function createApp ', () => {
   });
 });
 
-// Ddescribe('Given the function startApp ', () => {
-//   describe('When we call it', () => {
-//     test('Then it call app.use', () => {
-//       const app = createApp();
-//       jest.spyOn(app, 'use');
-//       const prisma = {} as unknown as PrismaClient;
-//       startApp(app, prisma);
-//       expect(app.use).toHaveBeenCalled();
-//     });
-//   });
-// });
+describe('Given the function startApp ', () => {
+  describe('When we call it', () => {
+    test('Then it call app.use', () => {
+      const app = createApp();
+      jest.spyOn(app, 'use');
+      const prisma = {} as unknown as PrismaClient;
+      startApp(app, prisma);
+      expect(app.use).toHaveBeenCalled();
+    });
+  });
+});

@@ -20,11 +20,6 @@ export const startApp = (app: Express, prisma: PrismaClient) => {
   app.use(morgan('dev'));
   app.use(cors());
 
-  app.get('/', (req, res, next) => {
-    console.log('App.get');
-    res.json({ messaje: 'App get' });
-  });
-
   const usersRepo = new UserRepository(prisma);
   const usersController = new UserController(usersRepo);
   const usersRouter = new UserRouter(usersController);
