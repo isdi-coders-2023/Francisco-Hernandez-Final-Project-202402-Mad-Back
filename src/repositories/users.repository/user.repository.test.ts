@@ -40,7 +40,7 @@ describe('Given a instance of the class UserRepository', () => {
     test('Then it should throw an error', async () => {
       (mockPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
       await expect(repo.readById('2')).rejects.toThrow(
-        new HttpError(404, 'Not Found', 'User 2 not found')
+        new HttpError(404, 'Not Found', ' User with this id not found')
       );
     });
   });
@@ -54,24 +54,34 @@ describe('Given a instance of the class UserRepository', () => {
     });
   });
 
-  // Describe('When we use the method update with a valid ID', () => {
-  //   test('Then it should call prisma.update', async () => {
-  //     const result = await repo.update('1', {
+  describe('When we use the method update with a valid ID', () => {
+    test('Then it should call prisma.update', async () => {
+      const result = await repo.update('1', {
+        name: 'fran',
+        email: 'fran@gmail.com',
+        password: '12345',
+        imageUrl: 'foton',
+      });
+      expect(mockPrisma.user.update).toHaveBeenCalled();
+      expect(result).toEqual({});
+    });
+  });
 
-  //     });
-  //     expect(mockPrisma.user.update).toHaveBeenCalled();
-  //     expect(result).toEqual({});
-  //   });
-  // });
-
-  // describe('When we use the method update with an invalid ID', () => {
-  //   test('Then it should throw an error', async () => {
-  //     (mockPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
-  //     await expect(repo.update('2', {})).rejects.toThrow(
-  //       new HttpError(404, 'Not Found', 'User with this id not found')
-  //     );
-  //   });
-  // });
+  describe('When we use the method update with an invalid ID', () => {
+    test('Then it should throw an error', async () => {
+      (mockPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
+      await expect(
+        repo.update('2', {
+          name: 'fran',
+          email: 'fran@gmail.com',
+          password: '12345',
+          imageUrl: 'foton',
+        })
+      ).rejects.toThrow(
+        new HttpError(404, 'Not Found', 'User with this id not found')
+      );
+    });
+  });
 
   describe('When we use the method delete with a valid ID', () => {
     test('Then it should call prisma.delete', async () => {
