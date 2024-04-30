@@ -40,7 +40,7 @@ describe('Given a instance of the class UserRepository', () => {
     test('Then it should throw an error', async () => {
       (mockPrisma.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
       await expect(repo.readById('2')).rejects.toThrow(
-        new HttpError(404, 'Not Found', ' User with this id not found')
+        new HttpError(404, 'Not Found', 'User with this id not found')
       );
     });
   });
