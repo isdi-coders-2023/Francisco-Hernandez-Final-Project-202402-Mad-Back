@@ -5,7 +5,6 @@ export class BaseController<T, C> {
   constructor(protected readonly repo: Repo<T, C>) {}
   async getAll(_req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('Controller');
       const result = await this.repo.readAll();
       res.json(result);
     } catch (error) {

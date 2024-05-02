@@ -84,4 +84,21 @@ export class UserRepository implements Repo<User, UserCreateAndUpdateDto> {
       select,
     });
   }
+
+  async searchForLogin(key: 'email', value: string) {
+    if (!'email'.includes(key)) {
+      throw new HttpError(404, 'Not Found', 'Invalid query parameters');
+    }
+
+    const userData = await this.prisma.user.findFirst({
+      where: { [key]: value },
+      select: { id: true, password: true, email: true, role: true },
+    });
+
+    if (!userData) {
+      throw new HttpError(404, 'Not Found', `Invalid ${key} or password`);
+    }
+
+    return userData;
+  }
 }
