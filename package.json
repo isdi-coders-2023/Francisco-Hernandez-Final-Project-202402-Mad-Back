@@ -12,6 +12,7 @@
     "dev": "tsc -w",
     "test": "jest",
     "test:dev": "cross-env NODE_ENV=test jest --watchAll --coverage",
+    "test:prod": "jest  --passWithNoTests --coverage",
     "lint": "eslint . --ext .ts",
     "prepare": "husky"
   },

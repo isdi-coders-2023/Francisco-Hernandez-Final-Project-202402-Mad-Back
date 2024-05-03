@@ -10,7 +10,7 @@ export type Payload = {
 } & jwt.JwtPayload;
 
 export class Auth {
-  static secret = process.env.SECRES_JWT;
+  static secret = process.env.SECRET_JWT;
 
   static async hash(value: string) {
     return hash(value, 10);
