@@ -22,10 +22,16 @@ export class UserRouter {
 
     this.router.get('/:id', userController.getById.bind(userController));
 
-    this.router.post('/', userController.create.bind(userController));
+    this.router.patch(
+      '/:id',
+      authMiddleware.authentication.bind(authMiddleware),
+      userController.update.bind(userController)
+    );
 
-    this.router.patch('/:id', userController.update.bind(userController));
-
-    this.router.delete('/:id', userController.delete.bind(userController));
+    this.router.delete(
+      '/:id',
+      authMiddleware.authentication.bind(authMiddleware),
+      userController.delete.bind(userController)
+    );
   }
 }
