@@ -27,10 +27,6 @@ describe('UserController', () => {
       } as unknown as Response;
       const mockNext = jest.fn();
 
-      const mockUser = {
-        email: 'test@example.com',
-        password: await Auth.hash('password123'),
-      };
       Auth.compare = jest.fn().mockResolvedValueOnce(true);
       Auth.signJwt = jest.fn().mockReturnValueOnce('mockToken');
 
@@ -70,11 +66,7 @@ describe('UserController', () => {
       await controller.login(mockRequest, mockResponse, mockNext);
 
       expect(mockNext).toHaveBeenCalledWith(
-        new HttpError(
-          400,
-          'Bad Request',
-          'Email/name and password are required'
-        )
+        new HttpError(400, 'Bad Request', 'Email and password are required')
       );
     });
   });

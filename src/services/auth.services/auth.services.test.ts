@@ -7,7 +7,7 @@ jest.mock('jsonwebtoken');
 describe('Given the "static" class Auth', () => {
   describe('When we use the static method hash', () => {
     test('Then it should call hash from bcrypt', async () => {
-      await Auth.hash('test');
+      await Auth.hash('test', 10);
       expect(hash).toHaveBeenCalled();
     });
   });

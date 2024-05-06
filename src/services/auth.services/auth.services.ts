@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
-import { compare, hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { HttpError } from '../../middleware/errors.middleware/errors.middleware.js';
 
 export type Payload = {
   id: string;
@@ -12,12 +11,12 @@ export type Payload = {
 export class Auth {
   static secret = process.env.SECRET_JWT;
 
-  static async hash(value: string) {
-    return hash(value, 10);
+  static async hash(password: string, saltRounds: number) {
+    return bcrypt.hash(password, saltRounds);
   }
 
   static async compare(value: string, hash: string) {
-    return compare(value, hash);
+    return bcrypt.compare(value, hash);
   }
 
   static signJwt(payload: Payload) {
