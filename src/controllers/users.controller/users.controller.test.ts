@@ -27,10 +27,6 @@ describe('UserController', () => {
       } as unknown as Response;
       const mockNext = jest.fn();
 
-      const mockUser = {
-        email: 'test@example.com',
-        password: await Auth.hash('password123'),
-      };
       Auth.compare = jest.fn().mockResolvedValueOnce(true);
       Auth.signJwt = jest.fn().mockReturnValueOnce('mockToken');
 

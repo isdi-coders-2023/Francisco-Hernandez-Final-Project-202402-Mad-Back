@@ -14,7 +14,10 @@ export class UserRouter {
   ) {
     debug('instantiated user router');
 
-    this.router.post('/register', userController.create.bind(userController));
+    this.router.post(
+      '/register',
+      userController.createUser.bind(userController)
+    );
 
     this.router.post('/login', userController.login.bind(userController));
 

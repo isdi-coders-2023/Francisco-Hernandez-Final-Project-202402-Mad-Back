@@ -25,11 +25,7 @@ export class UserController extends BaseController<
 
     if (!email || !password) {
       next(
-        new HttpError(
-          400,
-          'Bad Request',
-          'Email/name and password are required'
-        )
+        new HttpError(400, 'Bad Request', 'Email and password are required')
       );
       return;
     }
@@ -65,13 +61,15 @@ export class UserController extends BaseController<
     }
   }
 
-  async create(req: Request, res: Response, next: NextFunction) {
+  async createUser(req: Request, res: Response, next: NextFunction) {
     const data = req.body as UserCreateAndUpdateDto;
-    data.password = await Auth.hash(data.password);
+    data.password = await Auth.hash(data.password, 10);
+
     try {
       const result = await this.repo.create(data);
       res.status(201);
       res.json(result);
+      await super.create(req, res, next);
     } catch (error) {
       next(error);
     }
