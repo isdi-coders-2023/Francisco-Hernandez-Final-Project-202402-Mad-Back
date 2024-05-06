@@ -66,11 +66,7 @@ describe('UserController', () => {
       await controller.login(mockRequest, mockResponse, mockNext);
 
       expect(mockNext).toHaveBeenCalledWith(
-        new HttpError(
-          400,
-          'Bad Request',
-          'Email/name and password are required'
-        )
+        new HttpError(400, 'Bad Request', 'Email and password are required')
       );
     });
   });
