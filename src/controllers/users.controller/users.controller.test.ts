@@ -27,8 +27,8 @@ describe('UserController', () => {
       } as unknown as Response;
       const mockNext = jest.fn();
 
-      Auth.compare = jest.fn().mockResolvedValueOnce(true);
-      Auth.signJwt = jest.fn().mockReturnValueOnce('mockToken');
+      Auth.compare = jest.fn().mockReturnValue(true);
+      Auth.signJwt = jest.fn().mockResolvedValue('mockToken');
 
       await controller.login(mockRequest, mockResponse, mockNext);
 
