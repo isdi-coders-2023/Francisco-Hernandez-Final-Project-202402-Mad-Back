@@ -20,7 +20,7 @@ const select = {
       id: true,
       title: true,
       content: true,
-      archieve: true,
+      archive: true,
       category: true,
     },
   },

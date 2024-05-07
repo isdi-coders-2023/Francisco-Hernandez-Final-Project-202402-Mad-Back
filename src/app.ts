@@ -7,6 +7,10 @@ import { UserController } from './controllers/users.controller/users.controller.
 import { UserRouter } from './routers/users.routers/user.router.js';
 import createDebug from 'debug';
 import { AuthMiddleware } from './middleware/auth.middleware/auth.middleware.js';
+import { ProjectRepository } from './repositories/projects.repository/project.repository.js';
+import { ProjectController } from './controllers/projects.controller/projects.controller.js';
+import { ProjectRouter } from './routers/projects.router/project.router.js';
+import { FilesMiddleware } from './middleware/files.middleware/files.middleware.js';
 
 const debug = createDebug('FP*:app');
 
@@ -23,8 +27,19 @@ export const startApp = (app: Express, prisma: PrismaClient) => {
 
   const authInterceptor = new AuthMiddleware();
 
+  const filesMiddleware = new FilesMiddleware();
+
   const usersRepo = new UserRepository(prisma);
   const usersController = new UserController(usersRepo);
   const usersRouter = new UserRouter(usersController, authInterceptor);
   app.use('/users', usersRouter.router);
+
+  const projectsRepo = new ProjectRepository(prisma);
+  const projectsController = new ProjectController(projectsRepo);
+  const projectsRouter = new ProjectRouter(
+    projectsController,
+    authInterceptor,
+    filesMiddleware
+  );
+  app.use('/projects', projectsRouter.router);
 };

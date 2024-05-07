@@ -30,7 +30,7 @@ model Project {
   id        String   @id @default(uuid())
   title     String
   content   String
-  archieve  String
+  archive   String
   category  Category
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String 

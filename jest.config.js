@@ -26,6 +26,7 @@ const config = {
     'tools',
     'type',
     '_mock',
+    'file.router',
     //   "\\\\node_modules\\\\"
   ],
   // Indicates which provider should be used to instrument code for coverage
