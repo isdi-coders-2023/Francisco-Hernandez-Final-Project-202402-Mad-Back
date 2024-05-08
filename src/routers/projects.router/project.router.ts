@@ -3,6 +3,7 @@ import createDebug from 'debug';
 import { type AuthMiddleware } from '../../middleware/auth.middleware/auth.middleware.js';
 import { type ProjectController } from '../../controllers/projects.controller/projects.controller.js';
 import { type FilesMiddleware } from '../../middleware/files.middleware/files.middleware.js';
+import { type ProjectRepository } from '../../repositories/projects.repository/project.repository.js';
 
 const debug = createDebug('FP*:router');
 
@@ -12,7 +13,8 @@ export class ProjectRouter {
   constructor(
     protected readonly projectController: ProjectController,
     protected authMiddleware: AuthMiddleware,
-    protected filesMiddleware: FilesMiddleware
+    protected filesMiddleware: FilesMiddleware,
+    protected projectRepo: ProjectRepository
   ) {
     debug('instantiated project router');
 
@@ -45,14 +47,17 @@ export class ProjectRouter {
     this.router.patch(
       '/:id',
       authMiddleware.authentication.bind(authMiddleware),
-      filesMiddleware.uploadFile('archive').bind(filesMiddleware),
-      filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
+      authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
+      // FfilesMiddleware.uploadFile('archive').bind(filesMiddleware),
+      // filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
+
       projectController.update.bind(projectController)
     );
 
     this.router.delete(
       '/:id',
       authMiddleware.authentication.bind(authMiddleware),
+      authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
       projectController.delete.bind(projectController)
     );
   }

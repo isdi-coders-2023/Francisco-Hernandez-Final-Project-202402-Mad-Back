@@ -24,7 +24,7 @@ export class BaseController<T, C> {
   }
 
   async create(req: Request, res: Response, next: NextFunction) {
-    const data = req.body as C & Payload;
+    const data = req.body as C;
     try {
       const result = await this.repo.create(data);
       res.status(201);

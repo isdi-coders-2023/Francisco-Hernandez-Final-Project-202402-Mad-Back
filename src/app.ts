@@ -39,7 +39,8 @@ export const startApp = (app: Express, prisma: PrismaClient) => {
   const projectsRouter = new ProjectRouter(
     projectsController,
     authInterceptor,
-    filesMiddleware
+    filesMiddleware,
+    projectsRepo
   );
   app.use('/projects', projectsRouter.router);
 };
