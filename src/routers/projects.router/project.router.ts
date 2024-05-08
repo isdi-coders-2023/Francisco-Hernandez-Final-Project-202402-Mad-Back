@@ -22,25 +22,31 @@ export class ProjectRouter {
       projectController.getAll.bind(projectController)
     );
 
+    // Tthis.router.get(
+    //   '/:id',
+    //   authMiddleware.authentication.bind(authMiddleware),
+    //   projectController.getById.bind(projectController)
+    // );
+
     this.router.get(
-      '/:id',
+      '/:category',
       authMiddleware.authentication.bind(authMiddleware),
-      projectController.getById.bind(projectController)
+      projectController.filterByCategory.bind(projectController)
     );
 
     this.router.post(
       '/',
+      authMiddleware.authentication.bind(authMiddleware),
       filesMiddleware.uploadFile('archive').bind(filesMiddleware),
       filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
-      authMiddleware.authentication.bind(authMiddleware),
       projectController.create.bind(projectController)
     );
 
     this.router.patch(
       '/:id',
+      authMiddleware.authentication.bind(authMiddleware),
       filesMiddleware.uploadFile('archive').bind(filesMiddleware),
       filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
-      authMiddleware.authentication.bind(authMiddleware),
       projectController.update.bind(projectController)
     );
 

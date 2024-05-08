@@ -1,4 +1,4 @@
-import { type PrismaClient } from '@prisma/client';
+import { type Category, type PrismaClient } from '@prisma/client';
 import { type Repo } from '../type.repo';
 import createDebug from 'debug';
 import {
@@ -6,6 +6,7 @@ import {
   type ProjectDto,
 } from '../../entities/projects.entitty/projects.entity';
 import { HttpError } from '../../middleware/errors.middleware/errors.middleware.js';
+import { type Payload } from '../../services/auth.services/auth.services';
 
 const debug = createDebug('FP*:repository');
 
@@ -47,9 +48,10 @@ export class ProjectRepository implements Repo<Project, ProjectDto> {
     return project;
   }
 
-  async create(data: ProjectDto) {
+  async create(data: ProjectDto & Payload) {
+    const { payload, ...dto } = data;
     const newProject = await this.prisma.project.create({
-      data,
+      data: dto,
       select,
     });
     return newProject;
@@ -83,5 +85,28 @@ export class ProjectRepository implements Repo<Project, ProjectDto> {
       where: { id },
       select,
     });
+  }
+
+  async searchForCategory(key: 'category', value: Category) {
+    if (!'category'.includes(key)) {
+      throw new HttpError(404, 'Not Found', 'Invalid query parameters');
+    }
+
+    const projectData = await this.prisma.project.findMany({
+      where: { [key]: value },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        category: true,
+        archive: true,
+      },
+    });
+
+    if (!projectData) {
+      throw new HttpError(404, 'Not Found', `Invalid parameters`);
+    }
+
+    return projectData;
   }
 }
