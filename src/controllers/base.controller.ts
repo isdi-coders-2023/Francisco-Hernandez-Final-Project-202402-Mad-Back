@@ -1,5 +1,6 @@
 import { type Repo } from '../repositories/type.repo';
 import { type NextFunction, type Request, type Response } from 'express';
+import { type Payload } from '../services/auth.services/auth.services';
 
 export class BaseController<T, C> {
   constructor(protected readonly repo: Repo<T, C>) {}
@@ -23,7 +24,7 @@ export class BaseController<T, C> {
   }
 
   async create(req: Request, res: Response, next: NextFunction) {
-    const data = req.body as C;
+    const data = req.body as C & Payload;
     try {
       const result = await this.repo.create(data);
       res.status(201);
