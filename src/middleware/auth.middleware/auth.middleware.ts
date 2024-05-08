@@ -56,6 +56,7 @@ export class AuthMiddleware {
         return;
       }
 
+      console.log(req.params.id);
       try {
         const item: T = await repo.readById(req.params.id);
 

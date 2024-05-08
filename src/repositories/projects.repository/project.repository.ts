@@ -57,7 +57,8 @@ export class ProjectRepository implements Repo<Project, ProjectDto> {
     return newProject;
   }
 
-  async update(id: string, data: Partial<ProjectDto>) {
+  async update(id: string, data: Partial<ProjectDto & Payload>) {
+    const { payload, ...projectDto } = data;
     const project = await this.prisma.project.findUnique({
       where: { id },
     });
@@ -67,7 +68,7 @@ export class ProjectRepository implements Repo<Project, ProjectDto> {
 
     return this.prisma.project.update({
       where: { id },
-      data,
+      data: projectDto,
       select,
     });
   }
