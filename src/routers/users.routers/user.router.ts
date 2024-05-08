@@ -27,7 +27,7 @@ export class UserRouter {
 
     this.router.patch(
       '/:id',
-      authMiddleware.authentication.bind(authMiddleware),
+      // AauthMiddleware.authentication.bind(authMiddleware),
       userController.update.bind(userController)
     );
 
