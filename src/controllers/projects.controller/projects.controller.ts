@@ -4,7 +4,7 @@ import { type Response, type Request, type NextFunction } from 'express';
 
 import {
   type Project,
-  type ProjectDto,
+  type ProjectCreateDto,
 } from '../../entities/projects.entitty/projects.entity.js';
 import { type ProjectRepository } from '../../repositories/projects.repository/project.repository.js';
 import { HttpError } from '../../middleware/errors.middleware/errors.middleware.js';
@@ -12,7 +12,10 @@ import { type Category } from '@prisma/client';
 
 const debug = createDebug('FP*:controller');
 
-export class ProjectController extends BaseController<Project, ProjectDto> {
+export class ProjectController extends BaseController<
+  Project,
+  ProjectCreateDto
+> {
   constructor(protected readonly repo: ProjectRepository) {
     debug('instantiated project controller');
     super(repo);

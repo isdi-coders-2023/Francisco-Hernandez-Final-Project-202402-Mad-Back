@@ -1,5 +1,5 @@
 import { type PrismaClient } from '@prisma/client';
-import { type ProjectDto } from '../../entities/projects.entitty/projects.entity';
+import { type ProjectCreateDto } from '../../entities/projects.entitty/projects.entity';
 import { HttpError } from '../../middleware/errors.middleware/errors.middleware';
 import { ProjectRepository } from './project.repository';
 import { type Payload } from '../../services/auth.services/auth.services';
@@ -48,7 +48,7 @@ describe('Given a instance of the class UserRepository', () => {
 
   describe('When we use the method create', () => {
     test('Then it should call prisma.create', async () => {
-      const data = {} as unknown as ProjectDto & Payload;
+      const data = {} as unknown as ProjectCreateDto & Payload;
       const result = await repo.create(data);
       expect(mockPrisma.project.create).toHaveBeenCalled();
       expect(result).toEqual({});
