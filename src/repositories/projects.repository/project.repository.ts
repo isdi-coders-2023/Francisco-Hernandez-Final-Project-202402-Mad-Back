@@ -2,8 +2,9 @@ import { type Category, type PrismaClient } from '@prisma/client';
 import { type Repo } from '../type.repo';
 import createDebug from 'debug';
 import {
+  type ProjectUpdateDto,
   type Project,
-  type ProjectDto,
+  type ProjectCreateDto,
 } from '../../entities/projects.entitty/projects.entity';
 import { HttpError } from '../../middleware/errors.middleware/errors.middleware.js';
 import { type Payload } from '../../services/auth.services/auth.services';
@@ -25,7 +26,7 @@ const select = {
     },
   },
 };
-export class ProjectRepository implements Repo<Project, ProjectDto> {
+export class ProjectRepository implements Repo<Project, ProjectCreateDto> {
   constructor(private readonly prisma: PrismaClient) {
     debug('instantiated project repository');
   }
@@ -48,7 +49,7 @@ export class ProjectRepository implements Repo<Project, ProjectDto> {
     return project;
   }
 
-  async create(data: ProjectDto & Payload) {
+  async create(data: ProjectCreateDto & Payload) {
     const { payload, ...dto } = data;
     const newProject = await this.prisma.project.create({
       data: dto,
@@ -57,7 +58,7 @@ export class ProjectRepository implements Repo<Project, ProjectDto> {
     return newProject;
   }
 
-  async update(id: string, data: Partial<ProjectDto & Payload>) {
+  async update(id: string, data: Partial<ProjectCreateDto & Payload>) {
     const { payload, ...projectDto } = data;
     const project = await this.prisma.project.findUnique({
       where: { id },

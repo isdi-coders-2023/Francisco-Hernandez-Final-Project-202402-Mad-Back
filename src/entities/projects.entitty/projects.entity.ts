@@ -9,12 +9,20 @@ export type Project = {
   author: Partial<User>;
 };
 
-export type ProjectDto = {
+export type ProjectCreateDto = {
   title: string;
   content: string;
   archive: string;
   category: Category;
   authorId: string;
+};
+
+export type ProjectUpdateDto = {
+  title?: string;
+  content?: string;
+  archive?: string;
+  category?: Category;
+  authorId?: string;
 };
 
 type Category =
