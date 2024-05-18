@@ -31,7 +31,11 @@ export const startApp = (app: Express, prisma: PrismaClient) => {
 
   const usersRepo = new UserRepository(prisma);
   const usersController = new UserController(usersRepo);
-  const usersRouter = new UserRouter(usersController, authInterceptor);
+  const usersRouter = new UserRouter(
+    usersController,
+    authInterceptor,
+    filesMiddleware
+  );
   app.use('/users', usersRouter.router);
 
   const projectsRepo = new ProjectRepository(prisma);
