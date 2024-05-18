@@ -46,18 +46,18 @@ export class ProjectRouter {
 
     this.router.patch(
       '/:id',
-      authMiddleware.authentication.bind(authMiddleware),
-      authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
-      // FfilesMiddleware.uploadFile('archive').bind(filesMiddleware),
-      // filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
+      // AauthMiddleware.authentication.bind(authMiddleware),
+      // authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
+      filesMiddleware.uploadFile('archive').bind(filesMiddleware),
+      filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
 
       projectController.update.bind(projectController)
     );
 
     this.router.delete(
       '/:id',
-      authMiddleware.authentication.bind(authMiddleware),
-      authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
+      // A authMiddleware.authentication.bind(authMiddleware),
+      // authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
       projectController.delete.bind(projectController)
     );
   }

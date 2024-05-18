@@ -2,6 +2,7 @@ import { type UserController } from '../../controllers/users.controller/users.co
 import { Router as createRouter } from 'express';
 import createDebug from 'debug';
 import { type AuthMiddleware } from '../../middleware/auth.middleware/auth.middleware';
+import { type FilesMiddleware } from '../../middleware/files.middleware/files.middleware';
 
 const debug = createDebug('FP*:router');
 
@@ -10,7 +11,8 @@ export class UserRouter {
 
   constructor(
     protected readonly userController: UserController,
-    protected authMiddleware: AuthMiddleware
+    protected authMiddleware: AuthMiddleware,
+    protected filesMiddleware: FilesMiddleware
   ) {
     debug('instantiated user router');
 
@@ -28,6 +30,8 @@ export class UserRouter {
     this.router.patch(
       '/:id',
       // AauthMiddleware.authentication.bind(authMiddleware),
+      filesMiddleware.uploadFile('archive').bind(filesMiddleware),
+      filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
       userController.update.bind(userController)
     );
 

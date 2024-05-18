@@ -74,4 +74,10 @@ export class UserController extends BaseController<
       next(error);
     }
   }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    req.body.imageUrl = req.body.archive as string;
+    delete req.body.archive;
+    await super.update(req, res, next);
+  }
 }

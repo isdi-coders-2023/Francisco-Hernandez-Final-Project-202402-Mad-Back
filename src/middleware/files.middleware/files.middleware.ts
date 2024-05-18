@@ -10,7 +10,7 @@ export class FilesMiddleware {
     debug('Instantiated files interceptor');
   }
 
-  uploadFile(fieldName = 'archive') {
+  uploadFile(fieldName: string) {
     debug('Creating file middleware');
     const storage = multer.diskStorage({
       destination: 'uploads/',

@@ -32,7 +32,7 @@ describe('Given a instance of the class FilesInterceptor', () => {
     });
 
     test('Then it should call Multer middleware', () => {
-      interceptor.uploadFile()(req, res, next);
+      interceptor.uploadFile('')(req, res, next);
       expect(mockMiddleware).toHaveBeenCalled();
     });
   });
