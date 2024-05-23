@@ -35,4 +35,18 @@ export class ProjectController extends BaseController<
       next(new HttpError(404, 'Bad request', 'Category not found'));
     }
   }
+
+  async getUsersWhoSavedProject(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { projectId } = req.params;
+    try {
+      const savedUsers = await this.repo.getUsersWhoSavedProject(projectId);
+      res.status(200).json(savedUsers);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

@@ -7,6 +7,7 @@ export type Project = {
   archive: string;
   category: Category;
   author: Partial<User>;
+  savedByUsers: Array<Partial<User>>;
 };
 
 export type ProjectCreateDto = {

@@ -7,6 +7,7 @@ export type User = {
   password?: string;
   imageUrl?: string;
   projects: Array<Partial<Project>>;
+  savedProjects: Array<Partial<Project>>;
 };
 
 export type UserCreateAndUpdateDto = {

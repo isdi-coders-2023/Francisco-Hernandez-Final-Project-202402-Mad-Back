@@ -1,6 +1,5 @@
 import { type Repo } from '../repositories/type.repo';
 import { type NextFunction, type Request, type Response } from 'express';
-import { type Payload } from '../services/auth.services/auth.services';
 
 export class BaseController<T, C> {
   constructor(protected readonly repo: Repo<T, C>) {}

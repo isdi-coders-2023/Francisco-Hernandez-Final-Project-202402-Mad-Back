@@ -29,7 +29,6 @@ export class UserRouter {
 
     this.router.patch(
       '/:id',
-      // AauthMiddleware.authentication.bind(authMiddleware),
       filesMiddleware.uploadFile('archive').bind(filesMiddleware),
       filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
       userController.update.bind(userController)
@@ -39,6 +38,21 @@ export class UserRouter {
       '/:id',
       authMiddleware.authentication.bind(authMiddleware),
       userController.delete.bind(userController)
+    );
+
+    this.router.get(
+      '/:userId/saved-projects',
+      userController.getSavedProjects.bind(userController)
+    );
+
+    this.router.post(
+      '/:userId/save-project/:projectId',
+      userController.saveProject.bind(userController)
+    );
+
+    this.router.delete(
+      '/:userId/remove-saved-project/:projectId',
+      userController.removeSavedProject.bind(userController)
     );
   }
 }

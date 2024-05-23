@@ -1,4 +1,4 @@
-import { type PrismaClient } from '@prisma/client';
+import { type Project, type PrismaClient } from '@prisma/client';
 import { type Repo } from '../type.repo';
 import {
   type UserCreateAndUpdateDto,
@@ -15,6 +15,7 @@ const select = {
   email: true,
   imageUrl: true,
   role: true,
+  savedProjects: true,
   projects: {
     select: {
       id: true,
@@ -100,5 +101,41 @@ export class UserRepository implements Repo<User, UserCreateAndUpdateDto> {
     }
 
     return userData;
+  }
+
+  async getSavedProjects(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { savedProjects: true },
+    });
+    if (!user) {
+      throw new HttpError(404, 'Not found', 'User with this id not found');
+    }
+
+    return user.savedProjects as Project[];
+  }
+
+  async saveProject(userId: string, projectId: string) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        savedProjects: {
+          connect: { id: projectId },
+        },
+      },
+      select,
+    });
+  }
+
+  async removeSavedProject(userId: string, projectId: string) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        savedProjects: {
+          disconnect: { id: projectId },
+        },
+      },
+      select,
+    });
   }
 }
