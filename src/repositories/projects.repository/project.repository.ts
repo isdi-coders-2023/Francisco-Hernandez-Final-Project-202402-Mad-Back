@@ -1,8 +1,7 @@
-import { type Category, type PrismaClient } from '@prisma/client';
+import { type User, type Category, type PrismaClient } from '@prisma/client';
 import { type Repo } from '../type.repo';
 import createDebug from 'debug';
 import {
-  type ProjectUpdateDto,
   type Project,
   type ProjectCreateDto,
 } from '../../entities/projects.entitty/projects.entity';
@@ -17,6 +16,7 @@ const select = {
   content: true,
   archive: true,
   category: true,
+  savedByUsers: true,
   author: {
     select: {
       id: true,
@@ -102,6 +102,7 @@ export class ProjectRepository implements Repo<Project, ProjectCreateDto> {
         content: true,
         category: true,
         archive: true,
+        savedByUsers: true,
       },
     });
 
@@ -110,5 +111,18 @@ export class ProjectRepository implements Repo<Project, ProjectCreateDto> {
     }
 
     return projectData;
+  }
+
+  async getUsersWhoSavedProject(projectId: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      select,
+    });
+    if (!project) {
+      throw new HttpError(404, 'Not found', 'Project with this id not found');
+    }
+
+    const savedByUsers = project.savedByUsers as User[];
+    return savedByUsers;
   }
 }

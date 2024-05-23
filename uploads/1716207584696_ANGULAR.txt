@@ -1,0 +1,51 @@
+ANGULAR 
+-------------
+
+	***ng g c 'nombre del componente' -s -t (-s, -t significa que el html y el style aparecen la misma pag)***
+	
+	*** ng new 'nombre del archivo' --ssr=False --style=css
+		(Te crea todos los documentos con la app.components y el inicio del proyecto sin scafolding y con css)***
+
+	***ng add  @angular-eslint/schematics (Agrega eslint con todo aplicado a angular)***
+
+	***ng g s core/services/storage Para crear un servicio dentro de la carpeta core/services/'nombre del servicio'***
+
+
+
+	1.COMO AÑADIR FECHA ACTUAL:
+		- creamos una variable(today) en el componente que quieras indicar la fecha:
+		- today = new Date
+		- en el template o html dentro de una etiqueta <p></p> metes {{today}} => <p>{{today}}</p>
+		- importamos en el componente DatePipe para que la fecha no aparezca con el formato por defecto
+		- <p>{{today | date}}</p> => el palo y date es el DatePipe que importamos antes
+		- <p>{{today | date: 'fullDate'}}</p> para que aparezca el dia tambien
+		- <p>{{today | date: 'fullDate': '' : 'ES'}}</p> Para ponerlo en español tienes que importar en app.config.ts LocaleEs
+	
+
+	2. ORDEN DE LAS CARPETAS
+
+		- model ---> types/interface
+		- shared ---> componentes generales: header/footer/menu
+		- features ---> componentes especificos de cada pagina: home/ about us/ contact
+		- core ---> metemos model/services
+
+
+
+	3. TODO LIST (Lista de tareas)
+		
+		- Creamos una interface de tareas (Task) con propiedades como id:number, title:'string', owner: 'string'
+		- Creamos un fichero con los datos (data)
+		- Creamos un componente 'todo'
+		- Dentro del componente creamos la lista de tareas(tasks: Task[] = [])
+		- getTasks() esto hace que te devuelva una lista de tareas
+		- getTasks()
+		- en html metemos un bucle <ul> @for(item of 'nombre de la lista de tareas que hayas puesto' track item.id){
+						<li>
+						<span> {{item.title}} </span>	
+						<span> {{item.owner}} </span>
+						EN LOS SPAN METEMOS LAS PROPIEDADES QUE QUEREMOS QUE MUESTRE POR CADA VUELTA
+						</li>} </ul>
+		- En css le metemos input type=checkbox, despues de <li>, para ir tachando las que vayamos haciendo
+
+
+	4.

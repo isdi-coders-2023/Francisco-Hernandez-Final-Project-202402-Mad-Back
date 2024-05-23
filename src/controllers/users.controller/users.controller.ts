@@ -80,4 +80,34 @@ export class UserController extends BaseController<
     delete req.body.archive;
     await super.update(req, res, next);
   }
+
+  async getSavedProjects(req: Request, res: Response, next: NextFunction) {
+    const { userId } = req.params;
+    try {
+      const savedProjects = await this.repo.getSavedProjects(userId);
+      res.status(200).json(savedProjects);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async saveProject(req: Request, res: Response, next: NextFunction) {
+    const { userId, projectId } = req.params;
+    try {
+      const result = await this.repo.saveProject(userId, projectId);
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async removeSavedProject(req: Request, res: Response, next: NextFunction) {
+    const { userId, projectId } = req.params;
+    try {
+      const result = await this.repo.removeSavedProject(userId, projectId);
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

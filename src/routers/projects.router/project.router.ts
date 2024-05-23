@@ -31,6 +31,11 @@ export class ProjectRouter {
     // );
 
     this.router.get(
+      '/:projectId/saved-users',
+      projectController.getUsersWhoSavedProject.bind(projectController)
+    );
+
+    this.router.get(
       '/:category',
       authMiddleware.authentication.bind(authMiddleware),
       projectController.filterByCategory.bind(projectController)
@@ -46,8 +51,6 @@ export class ProjectRouter {
 
     this.router.patch(
       '/:id',
-      // AauthMiddleware.authentication.bind(authMiddleware),
-      // authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
       filesMiddleware.uploadFile('archive').bind(filesMiddleware),
       filesMiddleware.cloudinaryUpload.bind(filesMiddleware),
 
@@ -56,8 +59,6 @@ export class ProjectRouter {
 
     this.router.delete(
       '/:id',
-      // A authMiddleware.authentication.bind(authMiddleware),
-      // authMiddleware.authorization(projectRepo, 'author').bind(authMiddleware),
       projectController.delete.bind(projectController)
     );
   }
